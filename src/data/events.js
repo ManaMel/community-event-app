@@ -1,4 +1,4 @@
-export const events = [ [
+export const events = [
   {
     "id": 1,
     "title": "地域ふれあい夏祭り",
@@ -49,4 +49,4 @@ export const events = [ [
     "organizer": "地域交流会",
     "category": "交流"
   }
-] ];
+];

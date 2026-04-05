@@ -29,40 +29,80 @@ export default function EventList() {
 
   return (
     <div>
-      <h1>イベント一覧</h1>
+      <h1 className="text-2xl font-bold mb-4">イベント一覧</h1>
 
       {/* タブ */}
-      <div>
-        <button onClick={() => setViewMode("all")}>すべて</button>
-        <button onClick={() => setViewMode("favorites")}>お気に入り</button>
+      <div className="flex gap-2 mb-4">
+        <button
+          onClick={() => setViewMode("all")}
+          className={`px-4 py-2 rounded-full text-sm ${
+            viewMode === "all"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-gray-700"
+          }`}
+        >
+          すべて
+        </button>
+
+        <button
+          onClick={() => setViewMode("favorites")}
+          className={`px-4 py-2 rounded-full text-sm ${
+            viewMode === "favorites"
+              ? "bg-blue-500 text-white"
+              : "bg-gray-200 text-gray-700"
+          }`}
+        >
+          お気に入り
+        </button>
       </div>
 
       {/* カテゴリ */}
-      <div>
+      <div className="flex flex-wrap gap-2 mb-4">
         {categories.map((cat) => (
-          <button key={cat} onClick={() => setSelectedCategory(cat)}>
+          <button
+            key={cat}
+            onClick={() => setSelectedCategory(cat)}
+            className={`px-3 py-1 rounded-full text-sm ${
+              selectedCategory === cat
+                ? "bg-green-500 text-white"
+                : "bg-gray-200 text-gray-700"
+            }`}
+          >
             {cat}
           </button>
         ))}
       </div>
 
       {/* イベント一覧 */}
-      {displayedEvents.map((event) => (
-        <div key={event.id}>
-          <Link to={`/events/${event.id}`}>
-            <h2>{event.title}</h2>
-          </Link>
+      <div className="grid gap-4 sm:grid-cols-2">
+        {displayedEvents.map((event) => (
+          <div
+            key={event.id}
+            className="bg-white rounded-xl shadow-sm p-4 transition hover:shadow-lg hover:-translate-y-1"
+          >
+            <Link to={`/events/${event.id}`}>
+              <h2 className="text-lg font-semibold text-gray-800">
+                {event.title}
+              </h2>
+            </Link>
 
-          <p>{event.description}</p>
-          <p>{event.category}</p>
+            <p className="text-gray-600 text-sm mt-1">
+              {event.description}
+            </p>
 
-          <button onClick={() => toggleFavorite(event.id)}>
-            {favorites.includes(event.id)
-              ? "★ お気に入り済み"
-              : "☆ お気に入り"}
-          </button>
-        </div>
-      ))}
+            <p className="text-gray-500 text-xs mt-1">
+              {event.category}
+            </p>
+
+            <button
+              onClick={() => toggleFavorite(event.id)}
+              className="mt-2 text-sm"
+            >
+              {favorites.includes(event.id) ? "★ お気に入り済み" : "☆ お気に入り"}
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
